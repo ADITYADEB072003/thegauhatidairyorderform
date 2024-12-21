@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h2 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .date-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .date-field label {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        .product-entry {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        .product-entry:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .add-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .add-btn:hover {
+            background-color: #218838;
+        }
+        .print-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .print-btn:hover {
+            background-color: #0056b3;
+        }
+        select, input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        select {
+            min-width: 300px;
+        }
+        input[type="number"] {
+            width: 100px;
+        }
+        input[type="date"] {
+            font-family: inherit;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            .product-entry {
+                border: none;
+                border-bottom: 1px solid #eee;
+                border-radius: 0;
+                padding: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Professional Product Order Form</h2>
+            <div class="date-field">
+                <label for="order-date">Order Date:</label>
+                <input type="date" id="order-date" required>
+            </div>
+        </div>
+        <div id="product-list">
+            <div class="product-entry">
+                <select class="product-name">
+                    <option value="">Select a product</option>
+                    <optgroup label="Computers">
+                        <option value="laptop">Business Laptop</option>
+                        <option value="desktop">Workstation Desktop</option>
+                        <option value="mini-pc">Mini PC</option>
+                    </optgroup>
+                    <optgroup label="Displays">
+                        <option value="monitor-4k">4K Monitor</option>
+                        <option value="monitor-ultra">Ultrawide Monitor</option>
+                    </optgroup>
+                    <optgroup label="Peripherals">
+                        <option value="keyboard-mech">Mechanical Keyboard</option>
+                        <option value="mouse-ergo">Ergonomic Mouse</option>
+                        <option value="headset">Professional Headset</option>
+                    </optgroup>
+                    <optgroup label="Office Equipment">
+                        <option value="printer-laser">Laser Printer</option>
+                        <option value="scanner-doc">Document Scanner</option>
+                    </optgroup>
+                </select>
+                <input type="number" placeholder="Quantity" class="product-quantity" min="1" value="1">
+                <button class="remove-btn no-print" onclick="removeProduct(this)">Remove</button>
+            </div>
+        </div>
+        
+        <div class="action-buttons no-print">
+            <button class="add-btn" onclick="addProduct()">Add Product</button>
+            <button class="print-btn" onclick="window.print()">Print Order</button>
+        </div>
+    </div>
+
+    <script>
+        // Set today's date as default
+        document.getElementById('order-date').valueAsDate = new Date();
+
+        function addProduct() {
+            const productList = document.getElementById('product-list');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'product-entry';
+            newEntry.innerHTML = productList.children[0].innerHTML;
+            newEntry.querySelector('select').value = '';
+            newEntry.querySelector('input').value = '1';
+            productList.appendChild(newEntry);
+        }
+
+        function removeProduct(button) {
+            const entry = button.parentElement;
+            if (document.getElementsByClassName('product-entry').length > 1) {
+                entry.remove();
+            } else {
+                alert('You must keep at least one product entry.');
+            }
+        }
+    </script>
+</body>
+</html>
