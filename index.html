@@ -23,6 +23,14 @@
             justify-content: space-between;
             align-items: center;
         }
+        .title-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo {
+            font-size: 32px;
+        }
         .header h2 {
             color: #2c3e50;
             margin: 0;
@@ -129,7 +137,10 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>The Gauhati Dairy</h2>
+            <div class="title-container">
+                <span class="logo"><img src="/IMG_20171119_0002.jpg"></span>
+                <h2>The Gauhati Dairy</h2>
+            </div>
             <div class="date-field">
                 <label for="order-date">Order Date:</label>
                 <input type="date" id="order-date" required>
